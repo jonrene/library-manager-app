@@ -14,16 +14,24 @@ function asyncHandler(cb){
   }
 }
 
-/* GET home page. */
+// GET route for home page
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
   res.render('index', {title: "Books", books: books});
 }));
 
-
+// GET route for new book page
 router.get('/books/new', asyncHandler(async (req, res) => {
   const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-  res.render('new-book', {title: "New Book", books: books});
+  res.render('new-book', {title: "New Book"});
 }));
+
+// GET route for update books page
+router.get(`/books/:id`, asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  console.log(book);
+  res.render('update-book', {title: "Update Book", id: req.params.id, book});
+}));
+
 
 module.exports = router;
