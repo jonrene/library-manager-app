@@ -17,8 +17,13 @@ function asyncHandler(cb){
 /* GET home page. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
-  console.log(typeof books);
   res.render('index', {title: "Books", books: books});
+}));
+
+
+router.get('/books/new', asyncHandler(async (req, res) => {
+  const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
+  res.render('new-book', {title: "New Book", books: books});
 }));
 
 module.exports = router;
