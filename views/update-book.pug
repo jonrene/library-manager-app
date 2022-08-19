@@ -5,6 +5,12 @@ block content
     h1=title 
 
     form(method="post", action=`/books/${id}`)
+        if error
+            h2(class="error") Oooops!
+            ul(class="error")
+                each err in error.errors
+                    li=err.message
+                    
         p 
             label(for="title") Title
             input(name="title" type="text" id="title" value=book.title)

@@ -27,14 +27,17 @@ router.get('/books', asyncHandler(async (req, res) => {
 
 // GET route for creating new book page
 router.get('/books/new', asyncHandler(async (req, res) => {
-  const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
   res.render('new-book', {title: "New Book"});
 }));
 
 // POST route for creating new book and adding it to database
 router.post('/books/new/', asyncHandler(async (req, res) => {
-  await Book.create({title:req.body.title, author:req.body.author, genre:req.body.genre, year:req.body.year})
-  res.redirect("/");
+  try{
+    await Book.create({title:req.body.title, author:req.body.author, genre:req.body.genre, year:req.body.year})
+    res.redirect("/");
+  }catch(error){
+    res.render('new-book', { error, title:"New Book"});
+  }
 }));
 
 // GET route for showing book detail page
@@ -45,9 +48,14 @@ router.get(`/books/:id`, asyncHandler(async (req, res) => {
 
 // POST route for updating book in database
 router.post(`/books/:id`, asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id);
-  await book.update({title:req.body.title, author:req.body.author, genre:req.body.genre, year:req.body.year})
-  res.redirect("/");
+  try{
+    let book = await Book.findByPk(req.params.id);
+    let update = await book.update({title:req.body.title, author:req.body.author, genre:req.body.genre, year:req.body.year})
+    res.redirect("/");
+  }catch(error){
+    let book = await Book.findByPk(req.params.id);
+    res.render("update-book", {title: "Update Book", id: req.params.id, error:error, book});
+  }
 }));
 
 
