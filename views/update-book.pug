@@ -4,7 +4,7 @@ block content
 
     h1=title 
 
-    form
+    form(method="post", action=`/books/${id}`)
         p 
             label(for="title") Title
             input(name="title" type="text" id="title" value=book.title)

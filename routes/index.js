@@ -37,10 +37,17 @@ router.post('/books/new/', asyncHandler(async (req, res) => {
   res.render('new-book', {title: "New Book"});
 }));
 
-// GET route for update books page
+// GET route for showing book detail page
 router.get(`/books/:id`, asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   res.render('update-book', {title: "Update Book", id: req.params.id, book});
+}));
+
+// POST route for updating book in database
+router.post(`/books/:id`, asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  await book.update({title:req.body.title, author:req.body.author, genre:req.body.genre, year:req.body.year})
+  res.redirect("/");
 }));
 
 
