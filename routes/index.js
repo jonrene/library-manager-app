@@ -16,13 +16,24 @@ function asyncHandler(cb){
 
 // GET route for home page
 router.get('/', asyncHandler(async (req, res) => {
+  res.redirect('/books');
+}));
+
+// GET route for showing book list
+router.get('/books', asyncHandler(async (req, res) => {
   const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
   res.render('index', {title: "Books", books: books});
 }));
 
-// GET route for new book page
+// GET route for creating new book page
 router.get('/books/new', asyncHandler(async (req, res) => {
   const books = await Book.findAll({ order: [["createdAt", "DESC"]] });
+  res.render('new-book', {title: "New Book"});
+}));
+
+// POST route for creating new book and adding it to database
+router.post('/books/new/', asyncHandler(async (req, res) => {
+  await Book.create({title:req.body.title, author:req.body.title, genre:req.body.genre, year:req.body.year})
   res.render('new-book', {title: "New Book"});
 }));
 
