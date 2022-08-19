@@ -33,7 +33,7 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 
 // POST route for creating new book and adding it to database
 router.post('/books/new/', asyncHandler(async (req, res) => {
-  await Book.create({title:req.body.title, author:req.body.title, genre:req.body.genre, year:req.body.year})
+  await Book.create({title:req.body.title, author:req.body.author, genre:req.body.genre, year:req.body.year})
   res.render('new-book', {title: "New Book"});
 }));
 
