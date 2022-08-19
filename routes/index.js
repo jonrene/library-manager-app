@@ -40,8 +40,14 @@ router.post('/books/new/', asyncHandler(async (req, res) => {
 // GET route for update books page
 router.get(`/books/:id`, asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  console.log(book);
   res.render('update-book', {title: "Update Book", id: req.params.id, book});
+}));
+
+
+// POST route for deleting a book to database
+router.post(`/books/:id/delete`, asyncHandler(async (req, res) => {
+  await Book.destroy({ where: { id: req.params.id} });
+  res.redirect("/");
 }));
 
 
