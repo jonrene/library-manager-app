@@ -1,3 +1,5 @@
+// book model/table for database
+
 'use strict';
 const { Model } = require('sequelize');
 

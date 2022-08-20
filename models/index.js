@@ -1,3 +1,5 @@
+// main db for application 
+
 'use strict';
 
 const fs = require('fs');
